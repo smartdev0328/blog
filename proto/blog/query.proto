@@ -7,6 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "blog/params.proto";
 
 import "blog/post.proto";
+import "blog/comment.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "blog/x/blog/types";
@@ -20,6 +21,16 @@ service Query {
   // Queries a list of Posts items.
 	rpc Posts(QueryPostsRequest) returns (QueryPostsResponse) {
 		option (google.api.http).get = "/blog/blog/posts";
+	}
+
+// Queries a Comment by id.
+	rpc Comment(QueryGetCommentRequest) returns (QueryGetCommentResponse) {
+		option (google.api.http).get = "/blog/blog/comment/{id}";
+	}
+
+	// Queries a list of Comment items.
+	rpc CommentAll(QueryAllCommentRequest) returns (QueryAllCommentResponse) {
+		option (google.api.http).get = "/blog/blog/comment";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -44,6 +55,23 @@ message QueryPostsResponse {
 
   // Adding pagination to response
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCommentRequest {
+	uint64 id = 1;
+}
+
+message QueryGetCommentResponse {
+	Comment Comment = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCommentRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCommentResponse {
+	repeated Comment Comment = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
