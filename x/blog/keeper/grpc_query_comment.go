@@ -11,7 +11,6 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"blog/x/blog/types"
 )
 
 func (k Keeper) CommentAll(c context.Context, req *types.QueryAllCommentRequest) (*types.QueryAllCommentResponse, error) {
